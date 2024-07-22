@@ -1,0 +1,19 @@
+/* Box sizing and user selection */
+* {
+	box-sizing: border-box;
+}
+
+/* Reset margins for headings and paragraphs */
+h1,
+h2,
+p {
+	margin: 0;
+}
+
+/* Reset padding and list styles for lists */
+ul,
+ol {
+	padding: 0;
+	list-style: none;
+}
+

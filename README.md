@@ -16,9 +16,9 @@ Live link: https://wayfarers-frontier.pages.dev/ 🧳
 - CMS _(You are here)_
 
 ## Features 🎯
-
-- Blog pages and Editor
 - Sign-up/Login authentication
+- Admin detail page (blogs, users, comments) 
+- Editor
 - Session continuity and authorization with JWT
 
 ## Hosting Platforms 🌐

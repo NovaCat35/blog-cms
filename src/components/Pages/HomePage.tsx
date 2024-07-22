@@ -1,9 +1,14 @@
-import React from 'react'
+import Navbar from "../Navbar";
+import Footer from "../Footer";
 
 function HomePage() {
-  return (
-    <div>HomePage</div>
-  )
+	return (
+		<div>
+			<Navbar />
+			<main></main>
+			<Footer />
+		</div>
+	);
 }
 
-export default HomePage
+export default HomePage;
