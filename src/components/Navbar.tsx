@@ -103,21 +103,21 @@ function Navbar() {
 		<>
 			<nav className={`flex px-10 pt-7 pb-3 ${isScrolled ? "bg-white bg-opacity-90" : ""} sticky top-0 z-10 transition-transform duration-300 transform ${showNav ? "translate-y-0" : "-translate-y-full"}`}>
 				<div className="logo-container w-[70px] h-[70px] flex items-center justify-center overflow-hidden rounded-full">
-					<Link to="/">
+					<a href="https://wayfarers-frontier.pages.dev/">
 						<img className="logo w-[250px] object-cover mt-4" src={logo} alt="site logo" />
-					</Link>
+					</a>
 				</div>
 
 				<div className="right-side flex gap-8 items-center text-[#223742] text-lg font-bold">
 					<Link to="/" className={`link ${activeLink == "/" ? "activeLink" : ""} underline-offset-4 hover:underline`}>
-						Home
-					</Link>
-					<Link to="/blogs" className={`link ${activeLink == "/blogs" ? "activeLink" : ""} underline-offset-4 hover:underline`}>
 						Blogs
 					</Link>
+					<Link to="/comments" className={`link ${activeLink == "/comments" ? "activeLink" : ""} underline-offset-4 hover:underline`}>
+						Comments
+					</Link>
 					{/* <Link to="/projects">Projects</Link> */}
-					<Link to="/about" className={`link ${activeLink == "/about" ? "activeLink" : ""} underline-offset-4 hover:underline`}>
-						About
+					<Link to="/users" className={`link ${activeLink == "/users" ? "activeLink" : ""} underline-offset-4 hover:underline`}>
+						Users
 					</Link>
 					{tokenActive ? (
 						<div ref={modalNavRef} onClick={toggleModal} className="pfp-modal-container cursor-pointer w-[60px] h-[60px] overflow-hidden rounded-full border-4">

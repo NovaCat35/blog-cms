@@ -52,9 +52,10 @@ function LoginPage() {
 
 				navigate("/"); // return back to homepage
 			} else {
+				console.log('username', username)
+				console.log('password',password)
 				const errorData = await response.json();
 				setErrorMessage(errorData.error || "Login failed.");
-				console.error("Login failed:", response.status);
 				errorRef.current?.classList.add("active");
 			}
 		} catch (error) {

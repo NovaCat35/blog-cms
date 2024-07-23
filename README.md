@@ -44,6 +44,7 @@ Live link: https://wayfarers-frontier.pages.dev/ 🧳
    npm install -D sass
    npm install --save react-lazy-load-image-component
    npm install --save @types/react-lazy-load-image-component
+   npm install react-markdown
    npm install html-react-parser --save
    npm install --save @tinymce/tinymce-react
 ```
