@@ -25,11 +25,11 @@ function Modal() {
 				<div className="options-container px-2 border-x-2 border-gray-300">
 					<div className="options flex flex-col gap-2 border-b-2 border-gray-300 pt-3 pb-5">
 						<Link to="/profile" className="modal-tab px-2 py-2 flex justify-start items-center gap-2 text-[#4a5366] hover:bg-gray-100 hover:text-[black]">
-							<img className="icon w-10" src={profileSvg} alt="profile icon" />
+							<img className="icon w-9" src={profileSvg} alt="profile icon" />
 							<p>Profile</p>
 						</Link>
 						<Link to="/editor" className="modal-tab px-2 py-2 flex justify-start items-center gap-2 text-[#4a5366] hover:bg-gray-100 hover:text-[black]">
-							<img className="icon w-10" src={writeSvg} alt="write icon" />
+							<img className="icon w-9" src={writeSvg} alt="write icon" />
 							<p>Write</p>
 						</Link>
 					</div>

@@ -11,6 +11,7 @@ import catImage from "../../assets/cat-bag.jpg";
 import formatDate from "../../functions/DateFormatter";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { v4 as uuidv4 } from "uuid";
+import "../../styles/Fonts.scss";
 
 function HomePage() {
 	const { tokenActive, user } = useContext(AuthContext); // we have a verified user (e.g. token is active), show mangement page instead of login/signup
@@ -27,9 +28,9 @@ function HomePage() {
 								{blogs.map((blog) => (
 									<div className="blog-container flex items-center justify-center md:justify-between w-full border-b border-gray-300 py-4" key={uuidv4()}>
 										<Link to={`/blogs/${blog._id}`} className="flex flex-col md:flex-row items-center gap-4">
-											<div className="img-container">
+											<div className="img-container max-h-[250px] md:max-w-[350px] overflow-hidden rounded">
 												{/* <img loading="lazy" className="max-h-[300px] object-cover rounded" src={blog.blog_img.img_url == "default" ? defaultImg : blog.blog_img.img_url} alt="blog image" /> */}
-												<LazyLoadImage className="max-h-[300px] object-cover rounded" alt="blog image" src={blog.blog_img.img_url == "default" ? defaultImg : blog.blog_img.img_url} />
+												<LazyLoadImage className="object-cover" alt="blog image" src={blog.blog_img.img_url == "default" ? defaultImg : blog.blog_img.img_url} />
 											</div>
 											<div className="texts-container ml-4">
 												<h1 className="text-xl font-bold">{blog.title}</h1>
