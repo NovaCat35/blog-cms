@@ -8,6 +8,7 @@ import "../../styles/Fonts.scss";
 import catImage from "../../assets/cat-bag.jpg";
 import heartSvg from "../../assets/heart.svg";
 import defaultImg from "../../assets/default.jpeg";
+import "../../styles/Comment.scss";
 
 function CommentPage() {
 	const { tokenActive } = useContext(AuthContext); // We have a verified user (e.g. token is active), show management page instead of login/signup
@@ -25,7 +26,7 @@ function CommentPage() {
 								<div key={comment._id} className="w-full mb-4">
 									<div className="top-container flex gap-5 mt-2 mb-2">
 										<div className="user-info">
-											<Link to={`/users/${comment.user._id}`}>{comment.user.username}</Link>
+											<Link to={`/users/${comment.user._id}`} className="font-semibold">{comment.user.username}</Link>
 											<div className="img-container w-[60px] h-[60px] rounded-full overflow-hidden">
 												<Link to={`/users/${comment.user._id}`}>
 													<img className="w-full h-full object-fit" src={comment.user.profile_img !== "default" ? comment.user.profile_img : defaultImg} alt="comment pfp" />
@@ -44,7 +45,7 @@ function CommentPage() {
 											<img src={heartSvg} className="heart w-[30px] fill-cyan-500" alt="heart icon" />
 											<p>{comment.likes.length}</p>
                                  <span>•</span>
-                                 <p>Date: {new Date(comment.date_posted).toLocaleDateString()}</p>
+                                 <p>Date: <span className="font-medium text-[#006eb1]">{new Date(comment.date_posted).toLocaleDateString()}</span></p>
 										</div>
 									</div>
 									<span className="flex mt-2 mb-4 w-full border border-[#1ca1ba]"></span>
