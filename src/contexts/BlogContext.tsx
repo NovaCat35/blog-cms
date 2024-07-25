@@ -47,11 +47,13 @@ export type Blog = {
 // Specify the type for the context value explicitly
 type BlogContextType = {
 	blogs: Blog[];
+	allComments: Comment[];
 	fetchComments: (id: string) => Promise<Comment[]>;
 };
 
 export const BlogContext = createContext<BlogContextType>({
 	blogs: [],
+	allComments: [],
 	fetchComments: async () => {
 		throw new Error("fetchComments function not implemented");
 	},
@@ -59,6 +61,7 @@ export const BlogContext = createContext<BlogContextType>({
 
 function BlogProvider({ children }: { children: React.ReactNode }) {
 	const [blogs, setBlogs] = useState<Blog[]>([]);
+	const [allComments, setAllComments] = useState<Comment[]>([]);
 
 	useEffect(() => {
 		const fetchBlogs = async () => {
@@ -78,6 +81,25 @@ function BlogProvider({ children }: { children: React.ReactNode }) {
 		fetchBlogs();
 	}, []);
 
+	useEffect(() => {
+		const fetchAllComments = async () => {
+			try {
+				const response = await fetch("https://wayfarers-frontier-api.fly.dev/comments/", {
+					mode: "cors",
+				});
+				if (!response.ok) {
+					throw new Error("Failed to fetch data");
+				}
+				const result = await response.json();
+				setAllComments(result.commentList);
+			} catch (error) {
+				console.error("Error fetching data:", error);
+			}
+		};
+		fetchAllComments();
+	}, []);
+
+
 	const fetchComments = async (id: string) => {
 		try {
 			const response = await fetch(`https://wayfarers-frontier-api.fly.dev/posts/${id}/comments`, {
@@ -93,7 +115,7 @@ function BlogProvider({ children }: { children: React.ReactNode }) {
 		}
 	};
 
-	return <BlogContext.Provider value={{ blogs, fetchComments }}>{children}</BlogContext.Provider>;
+	return <BlogContext.Provider value={{ blogs, allComments, fetchComments }}>{children}</BlogContext.Provider>;
 }
 
 export default BlogProvider;

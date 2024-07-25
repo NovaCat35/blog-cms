@@ -14,7 +14,7 @@ import { v4 as uuidv4 } from "uuid";
 import "../../styles/Fonts.scss";
 
 function HomePage() {
-	const { tokenActive, user } = useContext(AuthContext); // we have a verified user (e.g. token is active), show mangement page instead of login/signup
+	const { tokenActive } = useContext(AuthContext); // we have a verified user (e.g. token is active), show mangement page instead of login/signup
 	const { blogs } = useContext(BlogContext);
 
 	return (
@@ -23,6 +23,7 @@ function HomePage() {
 			<main className="flex-grow px-[30px] md:px-[7rem] mt-10">
 				{tokenActive ? (
 					<div>
+            <h1 className="text-4xl text-[#1e81b0] font-bold">Manage Blogs</h1>
 						{blogs.length > 0 ? (
 							<div className="posts-cards-container">
 								{blogs.map((blog) => (
@@ -59,7 +60,6 @@ function HomePage() {
 				) : (
 					<div className="flex flex-col items-center mb-8">
 						<h1 className="text-xl">Your session has expired. Please sign-in again.</h1>
-						<div>{user.username}</div>
 						<img className="max-w-sm mt-8 object-cover rounded-lg" src={catImage} alt="cat in bag" />
 					</div>
 				)}
