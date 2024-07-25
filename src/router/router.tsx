@@ -2,7 +2,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "../components/Pages/HomePage";
 import LoginPage from "../components/Pages/LoginPage";
 import SignupPage from "../components/Pages/SignupPage";
-import CommentPage from "../components/Pages/CommentsPage";
+import CommentsPage from "../components/Pages/CommentsPage";
+import UsersPage from "../components/Pages/UsersPage";
 import ErrorPage from "../components/Pages/ErrorPage";
 import RouteWrapper from "./RouterWrapper";
 
@@ -37,7 +38,15 @@ const Router = () => {
 			path: "/comments",
 			element: (
 				<RouteWrapper>
-					<CommentPage />
+					<CommentsPage />
+				</RouteWrapper>
+			),
+		},
+		{
+			path: "/users",
+			element: (
+				<RouteWrapper>
+					<UsersPage />
 				</RouteWrapper>
 			),
 		},

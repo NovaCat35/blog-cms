@@ -48,12 +48,14 @@ export type Blog = {
 type BlogContextType = {
 	blogs: Blog[];
 	allComments: Comment[];
+	allUsers: User[];
 	fetchComments: (id: string) => Promise<Comment[]>;
 };
 
 export const BlogContext = createContext<BlogContextType>({
 	blogs: [],
 	allComments: [],
+	allUsers: [],
 	fetchComments: async () => {
 		throw new Error("fetchComments function not implemented");
 	},
@@ -62,6 +64,7 @@ export const BlogContext = createContext<BlogContextType>({
 function BlogProvider({ children }: { children: React.ReactNode }) {
 	const [blogs, setBlogs] = useState<Blog[]>([]);
 	const [allComments, setAllComments] = useState<Comment[]>([]);
+	const [allUsers, setAllUsers] = useState<User[]>([]);
 
 	useEffect(() => {
 		const fetchBlogs = async () => {
@@ -99,6 +102,33 @@ function BlogProvider({ children }: { children: React.ReactNode }) {
 		fetchAllComments();
 	}, []);
 
+	useEffect(() => {
+		const fetchAllUsers = async () => {
+			try {
+				// Get the JWT token from localStorage
+				const token = localStorage.getItem("jwt_token");
+				if (!token) {
+					throw new Error("JWT token not found");
+				}
+
+				const response = await fetch("https://wayfarers-frontier-api.fly.dev/users/", {
+					mode: "cors",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+				});
+				if (!response.ok) {
+					throw new Error("Failed to fetch data");
+				}
+				const result = await response.json();
+				setAllUsers(result.users);
+			} catch (error) {
+				console.error("Error fetching data:", error);
+			}
+		};
+		fetchAllUsers();
+	}, []);
 
 	const fetchComments = async (id: string) => {
 		try {
@@ -115,7 +145,7 @@ function BlogProvider({ children }: { children: React.ReactNode }) {
 		}
 	};
 
-	return <BlogContext.Provider value={{ blogs, allComments, fetchComments }}>{children}</BlogContext.Provider>;
+	return <BlogContext.Provider value={{ blogs, allComments, allUsers, fetchComments }}>{children}</BlogContext.Provider>;
 }
 
 export default BlogProvider;
