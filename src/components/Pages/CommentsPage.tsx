@@ -3,7 +3,7 @@ import Navbar from "../Navbar";
 import Footer from "../Footer";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
-import { BlogContext, Comment } from "../../contexts/BlogContext";
+import { BlogContext, Comment } from "../../contexts/MgmtContext";
 import "../../styles/Fonts.scss";
 import catImage from "../../assets/cat-bag.jpg";
 import heartSvg from "../../assets/heart.svg";
@@ -61,7 +61,7 @@ function CommentPage() {
 												Date: <span className="font-medium text-[#006eb1]">{new Date(comment.date_posted).toLocaleDateString()}</span>
 											</p>
 											<div className="cursor-pointer text-[14px] text-[#8d939e] font-medium ml-4 rounded px-2 py-[1px] border-2 border-[#1ca1ba] hover:border-[#db117d]">
-												<DeleteBtn commentId={comment._id} isReply={false} refreshComments={refreshComments} />
+												<DeleteBtn commentId={comment._id} isReply={false} refreshInfo={refreshComments} />
 											</div>
 										</div>
 									</div>
@@ -70,7 +70,7 @@ function CommentPage() {
 										<div className="replies-container mt-4 pl-8">
 											<h3 className="font-bold mb-2 bg-[#1ca1ba] text-white pl-2">Replies:</h3>
 											{comment.replies.map((reply, index) => (
-												<div key={reply._id} className="reply mb-4">
+												<div key={reply._id} className="reply mb-4 bg-[#f6f8fa]">
 													<div className="top-container flex gap-5 mb-2">
 														<div className="user-info">
 															<Link to={`/users/${reply.user._id}`} className="font-semibold">
@@ -95,7 +95,7 @@ function CommentPage() {
 																Date: <span className="font-medium text-[#006eb1]">{new Date(reply.date_posted).toLocaleDateString()}</span>
 															</p>
 															<div className="cursor-pointer text-[14px] text-[#8d939e] font-medium ml-4 rounded px-2 py-[1px] border-2 border-[#1ca1ba] hover:border-[#db117d]">
-																<DeleteBtn commentId={comment._id} replyId={reply._id} isReply={true} refreshComments={refreshComments} />
+																<DeleteBtn commentId={comment._id} replyId={reply._id} isReply={true} refreshInfo={refreshComments} />
 															</div>
 														</div>
 													</div>

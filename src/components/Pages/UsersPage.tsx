@@ -1,17 +1,27 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
-import { BlogContext } from "../../contexts/BlogContext";
+import { BlogContext, User } from "../../contexts/MgmtContext";
 import formatDate from "../../functions/DateFormatter";
 import "../../styles/Fonts.scss";
 import catImage from "../../assets/cat-bag.jpg";
 import defaultImg from "../../assets/default.jpeg";
+import DeleteBtn from "../DeleteBtn";
 
 function UsersPage() {
 	const { tokenActive, user } = useContext(AuthContext); // We have a verified user (e.g. token is active), show management page instead of login/signup
-	const { allUsers } = useContext(BlogContext);
+	const { allUsers, fetchAllUsers } = useContext(BlogContext);
+	const [allUsersInfo, setAllUsersInfo] = useState<User[]>([]);
+
+	useEffect(() => {
+		setAllUsersInfo(allUsersInfo);
+	}, [allUsersInfo]);
+
+	const refreshUsers = async () => {
+		await fetchAllUsers();
+	};
 
 	return (
 		<div className="flex flex-col min-h-screen">
@@ -35,15 +45,20 @@ function UsersPage() {
 													</Link>
 												</div>
 											</div>
-											<div className="user-info">
+											<div className="user-info w-full">
 												<div>
 													Date Joined: <span className="text-[#105581]">{formatDate(user.date_joined)}</span>
 												</div>
 												<div>
 													Email: <span className="text-[#105581]">{user.email}</span>
 												</div>
-												<div>
-													Role: <span className={`${user.admin_access ? "text-[#d81178]" : "text-[#00adb3]"} font-medium`}>{user.admin_access ? "Admin" : "Reader"}</span>
+												<div className="flex w-full">
+													<div>
+														Role: <span className={`${user.admin_access ? "text-[#d81178]" : "text-[#00adb3]"} font-medium`}>{user.admin_access ? "Admin" : "Reader"}</span>
+													</div>
+													<div className="ml-auto cursor-pointer text-[14px] text-[#8d939e] font-medium mt-2 ml-4 rounded px-2 py-[1px] border-2 border-[#1ca1ba] hover:border-[#db117d]">
+														<DeleteBtn userId={user._id} isUser={true} refreshInfo={refreshUsers} />
+													</div>
 												</div>
 											</div>
 										</div>

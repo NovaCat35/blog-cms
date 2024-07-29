@@ -1,13 +1,15 @@
 import trashImg from "../assets/trashcan.svg";
 
 interface DeleteBtnProps {
-	commentId: string;
+	commentId?: string;
 	replyId?: string;
-	isReply: boolean;
-	refreshComments: () => void;
+	userId?: string;
+	isReply?: boolean;
+	isUser?: boolean;
+	refreshInfo: () => void;
 }
 
-function DeleteBtn({ commentId, replyId, isReply, refreshComments }: DeleteBtnProps) {
+function DeleteBtn({ commentId, replyId, isReply, refreshInfo, userId, isUser }: DeleteBtnProps) {
 	const handleDelete = async () => {
 		try {
 			// Get the JWT token from localStorage
@@ -19,6 +21,15 @@ function DeleteBtn({ commentId, replyId, isReply, refreshComments }: DeleteBtnPr
 			let response;
 			if (isReply && replyId) {
 				response = await fetch(`https://wayfarers-frontier-api.fly.dev/comments/${commentId}/replies/${replyId}`, {
+					mode: "cors",
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+				});
+			} else if (isUser) {
+				response = await fetch(`https://wayfarers-frontier-api.fly.dev/users/${userId}`, {
 					mode: "cors",
 					method: "DELETE",
 					headers: {
@@ -39,14 +50,14 @@ function DeleteBtn({ commentId, replyId, isReply, refreshComments }: DeleteBtnPr
 
 			if (!response.ok) {
 				// Handle error
-				console.error("Failed to delete comment");
+				console.error("Failed to delete info");
 			} else {
-				refreshComments();
+				refreshInfo();
 				const data = await response.json();
 				console.log(data.message);
 			}
 		} catch (error) {
-			console.error("An error occurred while deleting the comment:", error);
+			console.error("An error occurred while deleting the info:", error);
 		}
 	};
 	return (

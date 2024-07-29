@@ -5,7 +5,7 @@ import Loading from "../Loading";
 import Markdown from "react-markdown";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
-import { BlogContext } from "../../contexts/BlogContext";
+import { BlogContext } from "../../contexts/MgmtContext";
 import defaultImg from "../../assets/default.jpeg";
 import catImage from "../../assets/cat-bag.jpg";
 import formatDate from "../../functions/DateFormatter";
@@ -23,7 +23,7 @@ function HomePage() {
 			<main className="flex-grow px-[30px] md:px-[7rem] mt-10">
 				{tokenActive ? (
 					<div>
-            <h1 className="text-4xl text-[#1e81b0] font-bold">Manage Blogs</h1>
+						<h1 className="text-4xl text-[#1e81b0] font-bold">Manage Blogs</h1>
 						{blogs.length > 0 ? (
 							<div className="posts-cards-container">
 								{blogs.map((blog) => (
