@@ -49,6 +49,7 @@ type BlogContextType = {
 	blogs: Blog[];
 	allComments: Comment[];
 	allUsers: User[];
+	fetchAllBlogs: () => Promise<void>;
 	fetchComments: (id: string) => Promise<Comment[]>;
 	fetchAllComments: () => Promise<void>;
 	fetchAllUsers: () => Promise<void>;
@@ -58,6 +59,9 @@ export const BlogContext = createContext<BlogContextType>({
 	blogs: [],
 	allComments: [],
 	allUsers: [],
+	fetchAllBlogs: async () => {
+		throw new Error("fetchAllBlogs function not implemented");
+	},
 	fetchComments: async () => {
 		throw new Error("fetchComments function not implemented");
 	},
@@ -74,22 +78,23 @@ function BlogProvider({ children }: { children: React.ReactNode }) {
 	const [allComments, setAllComments] = useState<Comment[]>([]);
 	const [allUsers, setAllUsers] = useState<User[]>([]);
 
-	useEffect(() => {
-		const fetchBlogs = async () => {
-			try {
-				const response = await fetch("https://wayfarers-frontier-api.fly.dev/posts/", {
-					mode: "cors",
-				});
-				if (!response.ok) {
-					throw new Error("Failed to fetch data");
-				}
-				const blogs = await response.json();
-				setBlogs(blogs.posts);
-			} catch (error) {
-				console.error("Error fetching data:", error);
+	const fetchAllBlogs = async () => {
+		try {
+			const response = await fetch("https://wayfarers-frontier-api.fly.dev/posts/", {
+				mode: "cors",
+			});
+			if (!response.ok) {
+				throw new Error("Failed to fetch data");
 			}
-		};
-		fetchBlogs();
+			const blogs = await response.json();
+			setBlogs(blogs.posts);
+		} catch (error) {
+			console.error("Error fetching data:", error);
+		}
+	};
+
+	useEffect(() => {
+		fetchAllBlogs();
 	}, []);
 
 	const fetchAllComments = async () => {
@@ -155,7 +160,7 @@ function BlogProvider({ children }: { children: React.ReactNode }) {
 		}
 	};
 
-	return <BlogContext.Provider value={{ blogs, allComments, allUsers, fetchComments, fetchAllComments, fetchAllUsers }}>{children}</BlogContext.Provider>;
+	return <BlogContext.Provider value={{ blogs, allComments, allUsers, fetchAllBlogs, fetchComments, fetchAllComments, fetchAllUsers }}>{children}</BlogContext.Provider>;
 }
 
 export default BlogProvider;

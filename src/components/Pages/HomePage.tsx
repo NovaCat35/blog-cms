@@ -1,21 +1,32 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
 import Loading from "../Loading";
 import Markdown from "react-markdown";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
-import { BlogContext } from "../../contexts/MgmtContext";
+import { BlogContext, Blog } from "../../contexts/MgmtContext";
 import defaultImg from "../../assets/default.jpeg";
 import catImage from "../../assets/cat-bag.jpg";
 import formatDate from "../../functions/DateFormatter";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { v4 as uuidv4 } from "uuid";
 import "../../styles/Fonts.scss";
+import DeleteBtn from "../DeleteBtn";
 
 function HomePage() {
 	const { tokenActive } = useContext(AuthContext); // we have a verified user (e.g. token is active), show mangement page instead of login/signup
-	const { blogs } = useContext(BlogContext);
+	const { blogs, fetchAllBlogs } = useContext(BlogContext);
+	const [allBlogs, setAllBlogs] = useState<Blog[]>([]);
+
+  useEffect(() => {
+		setAllBlogs(blogs);
+	}, [blogs]);
+
+  // This function is called so we can change the infos in the context. This will cause the "refresh/rerender"
+	const refreshBlogs = async () => {
+		await fetchAllBlogs();
+	};
 
 	return (
 		<div className="flex flex-col min-h-screen">
@@ -24,7 +35,7 @@ function HomePage() {
 				{tokenActive ? (
 					<div>
 						<h1 className="text-4xl text-[#1e81b0] font-bold">Manage Blogs</h1>
-						{blogs.length > 0 ? (
+						{allBlogs.length > 0 ? (
 							<div className="posts-cards-container">
 								{blogs.map((blog) => (
 									<div className="blog-container flex items-center justify-center md:justify-between w-full border-b border-gray-300 py-4" key={uuidv4()}>
@@ -34,7 +45,12 @@ function HomePage() {
 												<LazyLoadImage className="object-cover" alt="blog image" src={blog.blog_img.img_url == "default" ? defaultImg : blog.blog_img.img_url} />
 											</div>
 											<div className="texts-container ml-4">
-												<h1 className="text-xl font-bold">{blog.title}</h1>
+												<div className="flex flex-wrap gap-x-4 header-container">
+                          <h1 className="text-xl font-bold">{blog.title}</h1>
+                          <div className="cursor-pointer text-[14px] text-[#8d939e] font-medium rounded px-2 py-[1px] border-2 border-[#1ca1ba] hover:border-[#db117d]">
+														<DeleteBtn isBlog={true} blogId={blog._id} refreshInfo={refreshBlogs}/>
+													</div>
+                        </div>
 												<p className="date-posted text-gray-500">{formatDate(blog.date_posted)}</p>
 												<div className="descriptions text-gray-800 max-w-[75vw] mt-2">
 													<Markdown disallowedElements={["a", "h3", "img"]} className="description text-ellipsis line-clamp-3 text-gray-700">
