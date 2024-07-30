@@ -1,9 +1,9 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext} from "react";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
-import { BlogContext, Comment } from "../../contexts/MgmtContext";
+import { BlogContext } from "../../contexts/MgmtContext";
 import "../../styles/Fonts.scss";
 import catImage from "../../assets/cat-bag.jpg";
 import heartSvg from "../../assets/heart.svg";
@@ -13,16 +13,7 @@ import DeleteBtn from "../DeleteBtn";
 
 function CommentPage() {
 	const { tokenActive } = useContext(AuthContext); // We have a verified user (e.g. token is active), show management page instead of login/signup
-	const { allComments, fetchAllComments } = useContext(BlogContext);
-	const [allBlogComments, setAllBlogComments] = useState<Comment[]>([]);
-
-	useEffect(() => {
-		setAllBlogComments(allComments);
-	}, [allComments]);
-
-	const refreshComments = async () => {
-		await fetchAllComments();
-	};
+	const { allComments } = useContext(BlogContext);
 
 	return (
 		<div className="flex flex-col min-h-screen">
@@ -31,8 +22,8 @@ function CommentPage() {
 				{tokenActive ? (
 					<div>
 						<h1 className="text-4xl text-[#1e81b0] font-bold mb-4">Manage Comments</h1>
-						{allBlogComments.length > 0 ? (
-							allBlogComments.map((comment) => (
+						{allComments.length > 0 ? (
+							allComments.map((comment) => (
 								<div key={comment._id} className="w-full mb-4">
 									<div className="top-container flex gap-5 mt-2 mb-2">
 										<div className="user-info">
@@ -61,7 +52,7 @@ function CommentPage() {
 												Date: <span className="font-medium text-[#006eb1]">{new Date(comment.date_posted).toLocaleDateString()}</span>
 											</p>
 											<div className="cursor-pointer text-[14px] text-[#8d939e] font-medium ml-4 rounded px-2 py-[1px] border-2 border-[#1ca1ba] hover:border-[#db117d]">
-												<DeleteBtn commentId={comment._id} isReply={false} refreshInfo={refreshComments} />
+												<DeleteBtn commentId={comment._id} isReply={false} />
 											</div>
 										</div>
 									</div>
@@ -95,7 +86,7 @@ function CommentPage() {
 																Date: <span className="font-medium text-[#006eb1]">{new Date(reply.date_posted).toLocaleDateString()}</span>
 															</p>
 															<div className="cursor-pointer text-[14px] text-[#8d939e] font-medium ml-4 rounded px-2 py-[1px] border-2 border-[#1ca1ba] hover:border-[#db117d]">
-																<DeleteBtn commentId={comment._id} replyId={reply._id} isReply={true} refreshInfo={refreshComments} />
+																<DeleteBtn commentId={comment._id} replyId={reply._id} isReply={true} />
 															</div>
 														</div>
 													</div>

@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { BlogContext } from "../contexts/MgmtContext";
 import trashImg from "../assets/trashcan.svg";
 
 interface DeleteBtnProps {
@@ -8,12 +10,14 @@ interface DeleteBtnProps {
 	isReply?: boolean;
 	isUser?: boolean;
 	isBlog?: boolean;
-	refreshInfo: () => void;
 }
 
-function DeleteBtn({ commentId, replyId, isReply, refreshInfo, userId, isUser, blogId, isBlog }: DeleteBtnProps) {
-	const handleDelete = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-		event.stopPropagation(); // Prevents the click event from bubbling up to parent "Link" elements (if applicable)
+function DeleteBtn({ commentId, replyId, isReply, userId, isUser, blogId, isBlog }: DeleteBtnProps) {
+	const { fetchAllBlogs, fetchAllComments, fetchAllUsers } = useContext(BlogContext);
+
+	const handleDelete = async (e: React.MouseEvent) => {
+		e.stopPropagation(); // prevent parent "Link" from taking us to broken (aka deleted) links
+		e.preventDefault();
 
 		try {
 			// Get the JWT token from localStorage
@@ -32,6 +36,7 @@ function DeleteBtn({ commentId, replyId, isReply, refreshInfo, userId, isUser, b
 						Authorization: `Bearer ${token}`,
 					},
 				});
+				fetchAllComments(); // refresh comment listing to reflect accurate lists
 			} else if (isUser && userId) {
 				response = await fetch(`https://wayfarers-frontier-api.fly.dev/users/${userId}`, {
 					mode: "cors",
@@ -41,6 +46,10 @@ function DeleteBtn({ commentId, replyId, isReply, refreshInfo, userId, isUser, b
 						Authorization: `Bearer ${token}`,
 					},
 				});
+				// User is deleted (which deletes their comments and blogs). Need to refresh blogs, comments, and user list.
+				fetchAllUsers();
+				fetchAllBlogs();
+				fetchAllComments();
 			} else if (isBlog && blogId) {
 				response = await fetch(`https://wayfarers-frontier-api.fly.dev/posts/${blogId}`, {
 					mode: "cors",
@@ -50,6 +59,9 @@ function DeleteBtn({ commentId, replyId, isReply, refreshInfo, userId, isUser, b
 						Authorization: `Bearer ${token}`,
 					},
 				});
+				// Blog is deleted (meaning all attached comments are deleted too). Need to refresh blog and comment list.
+				fetchAllBlogs();
+				fetchAllComments();
 			} else {
 				response = await fetch(`https://wayfarers-frontier-api.fly.dev/comments/${commentId}`, {
 					mode: "cors",
@@ -59,13 +71,14 @@ function DeleteBtn({ commentId, replyId, isReply, refreshInfo, userId, isUser, b
 						Authorization: `Bearer ${token}`,
 					},
 				});
+				fetchAllComments();
 			}
 
+			/** Checks response results : Failure or success **/
 			if (!response.ok) {
 				// Handle error
 				console.error("Failed to delete info");
 			} else {
-				refreshInfo();
 				const data = await response.json();
 				console.log(data.message);
 			}
@@ -74,11 +87,11 @@ function DeleteBtn({ commentId, replyId, isReply, refreshInfo, userId, isUser, b
 		}
 	};
 	return (
-		<div className="trash flex items-center">
+		<div className="trash flex items-center" onClick={handleDelete}>
 			<img className="w-[25px]" src={trashImg} alt="trashcan icon" />
-			<button className="text-gray-500 hover:text-[#e7175a]" onClick={handleDelete} aria-label="Delete">
+			<p className="text-gray-500 hover:text-[#e7175a]" aria-label="Delete">
 				Delete
-			</button>
+			</p>
 		</div>
 	);
 }

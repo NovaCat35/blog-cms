@@ -1,9 +1,9 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
-import { BlogContext, User } from "../../contexts/MgmtContext";
+import { BlogContext } from "../../contexts/MgmtContext";
 import formatDate from "../../functions/DateFormatter";
 import "../../styles/Fonts.scss";
 import catImage from "../../assets/cat-bag.jpg";
@@ -12,16 +12,7 @@ import DeleteBtn from "../DeleteBtn";
 
 function UsersPage() {
 	const { tokenActive, user } = useContext(AuthContext); // We have a verified user (e.g. token is active), show management page instead of login/signup
-	const { allUsers, fetchAllUsers } = useContext(BlogContext);
-	const [allUsersInfo, setAllUsersInfo] = useState<User[]>([]);
-
-	useEffect(() => {
-		setAllUsersInfo(allUsersInfo);
-	}, [allUsersInfo]);
-
-	const refreshUsers = async () => {
-		await fetchAllUsers();
-	};
+	const { allUsers } = useContext(BlogContext);
 
 	return (
 		<div className="flex flex-col min-h-screen">
@@ -57,7 +48,7 @@ function UsersPage() {
 														Role: <span className={`${user.admin_access ? "text-[#d81178]" : "text-[#00adb3]"} font-medium`}>{user.admin_access ? "Admin" : "Reader"}</span>
 													</div>
 													<div className="ml-auto cursor-pointer text-[14px] text-[#8d939e] font-medium mt-2 ml-4 rounded px-2 py-[1px] border-2 border-[#1ca1ba] hover:border-[#db117d]">
-														<DeleteBtn userId={user._id} isUser={true} refreshInfo={refreshUsers} />
+														<DeleteBtn userId={user._id} isUser={true} />
 													</div>
 												</div>
 											</div>
