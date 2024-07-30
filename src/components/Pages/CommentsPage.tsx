@@ -51,7 +51,7 @@ function CommentPage() {
 											<p>
 												Date: <span className="font-medium text-[#006eb1]">{new Date(comment.date_posted).toLocaleDateString()}</span>
 											</p>
-											<div className="cursor-pointer text-[14px] text-[#8d939e] font-medium ml-4 rounded px-2 py-[1px] border-2 border-[#1ca1ba] hover:border-[#db117d]">
+											<div className="ml-4">
 												<DeleteBtn commentId={comment._id} isReply={false} />
 											</div>
 										</div>
@@ -85,7 +85,7 @@ function CommentPage() {
 															<p>
 																Date: <span className="font-medium text-[#006eb1]">{new Date(reply.date_posted).toLocaleDateString()}</span>
 															</p>
-															<div className="cursor-pointer text-[14px] text-[#8d939e] font-medium ml-4 rounded px-2 py-[1px] border-2 border-[#1ca1ba] hover:border-[#db117d]">
+															<div className="ml-4">
 																<DeleteBtn commentId={comment._id} replyId={reply._id} isReply={true} />
 															</div>
 														</div>

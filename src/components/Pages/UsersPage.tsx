@@ -47,7 +47,7 @@ function UsersPage() {
 													<div>
 														Role: <span className={`${user.admin_access ? "text-[#d81178]" : "text-[#00adb3]"} font-medium`}>{user.admin_access ? "Admin" : "Reader"}</span>
 													</div>
-													<div className="ml-auto cursor-pointer text-[14px] text-[#8d939e] font-medium mt-2 ml-4 rounded px-2 py-[1px] border-2 border-[#1ca1ba] hover:border-[#db117d]">
+													<div className="ml-auto">
 														<DeleteBtn userId={user._id} isUser={true} />
 													</div>
 												</div>

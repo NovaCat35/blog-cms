@@ -13,6 +13,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { v4 as uuidv4 } from "uuid";
 import "../../styles/Fonts.scss";
 import DeleteBtn from "../DeleteBtn";
+import EditBtn from "../EditBtn";
 
 function HomePage() {
 	const { tokenActive } = useContext(AuthContext); // we have a verified user (e.g. token is active), show mangement page instead of login/signup
@@ -29,7 +30,7 @@ function HomePage() {
 							<div className="posts-cards-container">
 								{blogs.map((blog) => (
 									<div className="blog-container flex items-center justify-center md:justify-between w-full border-b border-gray-300 py-4" key={uuidv4()}>
-										<Link to={`/blogs/${blog._id}`} className="flex flex-col md:flex-row items-center gap-4">
+										<Link to={`https://wayfarers-frontier.pages.dev/blogs/${blog._id}`} className="flex flex-col md:flex-row items-center gap-4">
 											<div className="img-container max-h-[250px] md:max-w-[350px] overflow-hidden rounded">
 												{/* <img loading="lazy" className="max-h-[300px] object-cover rounded" src={blog.blog_img.img_url == "default" ? defaultImg : blog.blog_img.img_url} alt="blog image" /> */}
 												<LazyLoadImage className="object-cover" alt="blog image" src={blog.blog_img.img_url == "default" ? defaultImg : blog.blog_img.img_url} />
@@ -37,9 +38,10 @@ function HomePage() {
 											<div className="texts-container ml-4">
 												<div className="flex flex-wrap gap-x-4 header-container">
 													<h1 className="text-xl font-bold">{blog.title}</h1>
-													<div className="cursor-pointer text-[14px] text-[#8d939e] font-medium rounded px-2 py-[1px] border-2 border-[#1ca1ba] hover:border-[#db117d]">
-														<DeleteBtn isBlog={true} blogId={blog._id} />
-													</div>
+													<div className="flex gap-2">
+                            <DeleteBtn isBlog={true} blogId={blog._id} />
+                            <EditBtn blogId={blog._id} />
+                          </div>
 												</div>
 												<p className="date-posted text-gray-500">{formatDate(blog.date_posted)}</p>
 												<div className="descriptions text-gray-800 max-w-[75vw] mt-2">

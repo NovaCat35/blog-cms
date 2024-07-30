@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import profileSvg from "../assets/profile.svg";
 import writeSvg from "../assets/edit.svg";
@@ -24,14 +24,14 @@ function Modal() {
 				</div>
 				<div className="options-container px-2 border-x-2 border-gray-300">
 					<div className="options flex flex-col gap-2 border-b-2 border-gray-300 pt-3 pb-5">
-						<Link to="/profile" className="modal-tab px-2 py-2 flex justify-start items-center gap-2 text-[#4a5366] hover:bg-gray-100 hover:text-[black]">
+						<a href="https://wayfarers-frontier.pages.dev/profile" className="modal-tab px-2 py-2 flex justify-start items-center gap-2 text-[#4a5366] hover:bg-gray-100 hover:text-[black]">
 							<img className="icon w-9" src={profileSvg} alt="profile icon" />
 							<p>Profile</p>
-						</Link>
-						<Link to="/editor" className="modal-tab px-2 py-2 flex justify-start items-center gap-2 text-[#4a5366] hover:bg-gray-100 hover:text-[black]">
+						</a>
+						<a href="https://wayfarers-frontier.pages.dev/editor" className="modal-tab px-2 py-2 flex justify-start items-center gap-2 text-[#4a5366] hover:bg-gray-100 hover:text-[black]">
 							<img className="icon w-9" src={writeSvg} alt="write icon" />
 							<p>Write</p>
-						</Link>
+						</a>
 					</div>
 				</div>
 				<div className="logout-container border-x-2 border-b-2 border-gray-300 w-full px-2 pb-2">

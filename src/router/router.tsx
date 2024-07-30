@@ -6,6 +6,7 @@ import CommentsPage from "../components/Pages/CommentsPage";
 import UsersPage from "../components/Pages/UsersPage";
 import ErrorPage from "../components/Pages/ErrorPage";
 import RouteWrapper from "./RouterWrapper";
+import EditPage from "../components/Pages/EditPage";
 
 
 const Router = () => {
@@ -47,6 +48,14 @@ const Router = () => {
 			element: (
 				<RouteWrapper>
 					<UsersPage />
+				</RouteWrapper>
+			),
+		},
+		{
+			path: "/edit/:id",
+			element: (
+				<RouteWrapper>
+					<EditPage />
 				</RouteWrapper>
 			),
 		},
