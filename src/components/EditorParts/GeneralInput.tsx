@@ -31,7 +31,7 @@ function GeneralInput() {
 
 	return (
 		<div className="h-[500px] md:w-[48vw]">
-			<p className="w-full bg-[#db117d] px-2 py-2 text-white">You have to be a verified user to submit a blog.</p>
+			<p className="w-full bg-[#db117d] px-2 py-2 text-white font-semibold">BLOG EDITOR</p>
 
 			<div className="main-inputs-section px-4 py-2 flex flex-col gap-2">
 				<div className="input-container mt-4">

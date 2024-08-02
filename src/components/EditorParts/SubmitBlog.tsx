@@ -1,11 +1,12 @@
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import TurndownService from "turndown";
 import { AuthContext } from "../../contexts/AuthContext";
 import { EditorContext } from "../Pages/EditPage";
 import "../../styles/SwitchBtn.scss";
 
 function SubmitBlog() {
+	const { id } = useParams();
 	const [isPublish, setIsPublish] = useState(true);
 	const { user, tokenActive } = useContext(AuthContext);
 	const { title, readTime, tags, file, imgSrcName, imgSrcLink, content } = useContext(EditorContext);
@@ -48,15 +49,13 @@ function SubmitBlog() {
 
 			if (file) {
 				formData.append("img_file", file);
-			} else {
-				throw new Error("No file selected");
-			}
+			} 
 
 			try {
 				// Note: the headers doesn't have "'Content-Type': 'application/json'" b/c we're sending a file (a.k.a FormData)
-				const response = await fetch("https://wayfarers-frontier-api.fly.dev/posts/", {
+				const response = await fetch(`https://wayfarers-frontier-api.fly.dev/posts/${id}`, {
 					mode: "cors",
-					method: "POST",
+					method: "PUT",
 					headers: {
 						Authorization: `Bearer ${token}`,
 					},
@@ -105,7 +104,7 @@ function SubmitBlog() {
 					</label>
 					<p className="text-[#00adb3] font-medium">{isPublish ? "Publish!" : "Blog will be hidden."}</p>
 				</div>
-				{!file && <p className="mt-4 text-[#d81178] font-semibold">ⓘ Please add an image file.</p>}
+					{!file && <p className="mt-4 text-[#687820] font-semibold">ⓘ Missing image file. <br/> <span className="text-[#d81178]">DO NOT</span> upload new image if you want to keep the current one.</p>}
 				{tags.length < 1 && <p className="mt-4 text-[#d81178] font-semibold">ⓘ At least one tag is required.</p>}
 			</div>
 			<button className={`${!user.admin_access ? "cursor-not-allowed" : ""} ml-8 mt-8 border-2 px-8 py-2 rounded-full bg-white hover:bg-[#db117d] hover:text-white`} onClick={handleSubmit}>

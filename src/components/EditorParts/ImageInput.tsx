@@ -1,16 +1,16 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { EditorContext } from "../Pages/EditPage";
 
 function ImageInput() {
-	const { imgSrcName, imgSrcLink, setFile, setImgSrcName, setImgSrcLink } = useContext(EditorContext);
-	const [imageUrl, setImageUrl] = useState("https://res.cloudinary.com/dx432kzlt/image/upload/v1717559527/blog_posts/main_blog_images/travel-dino-reichmuth_bcuon5.jpg");
+	const { imgUrl, imgSrcName, imgSrcLink, setFile, setImgUrl, setImgSrcName, setImgSrcLink } = useContext(EditorContext);
+	// const [newImgUrl, setNewImgUrl] = useState("https://res.cloudinary.com/dx432kzlt/image/upload/v1717559527/blog_posts/main_blog_images/travel-dino-reichmuth_bcuon5.jpg");
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const selectedFile = e.target.files?.[0];
 		if (selectedFile) {
 			setFile(selectedFile);
 			const fileUrl = URL.createObjectURL(selectedFile); // Get the URL of the selected file
-			setImageUrl(fileUrl); // Set the image URL to display
+			setImgUrl(fileUrl); // Set the image URL to display
 		}
 	};
 
@@ -50,9 +50,9 @@ function ImageInput() {
 				<label htmlFor="read-time">Where's the image source?</label>
 				<input onChange={handleImgLinkChange} id="read-time" type="text" placeholder="Unsplash" min={0} value={imgSrcLink} />
 			</div>
-			{imageUrl && (
+			{imgUrl && (
 				<div className="flex justify-center">
-					<img className="object-contain h-[300px]" src={imageUrl} alt="Selected Image" />
+					<img className="object-contain h-[300px]" src={imgUrl} alt="Selected Image" />
 				</div>
 			)}
 		</div>

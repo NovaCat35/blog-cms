@@ -55,7 +55,6 @@ function EditPage() {
 	const { tokenActive } = useContext(AuthContext); // we have a verified user (e.g. token is active), show mangement page instead of login/signup
 	const { blogs } = useContext(BlogContext);
 	const [editBlog, setEditBlog] = useState<Blog | undefined>(undefined);
-
 	const [activeTab, setActiveTab] = useState("general");
 	const [content, setContent] = useState<string>("");
 	const [title, setTitle] = useState<string>("");
