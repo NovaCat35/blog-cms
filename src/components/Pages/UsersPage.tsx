@@ -62,7 +62,7 @@ function UsersPage() {
 								</div>
 							)
 						) : (
-							<p className="mt-4 mb-4">You need to have admin status to access these info.</p>
+							<p className="mt-4 mb-4 font-bold">You need to have admin status to access these info.</p>
 						)}
 					</div>
 				) : (

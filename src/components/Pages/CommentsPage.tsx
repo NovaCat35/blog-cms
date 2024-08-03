@@ -12,7 +12,7 @@ import "../../styles/Comment.scss";
 import DeleteBtn from "../DeleteBtn";
 
 function CommentPage() {
-	const { tokenActive } = useContext(AuthContext); // We have a verified user (e.g. token is active), show management page instead of login/signup
+	const { tokenActive, user } = useContext(AuthContext); // We have a verified user (e.g. token is active), show management page instead of login/signup
 	const { allComments } = useContext(BlogContext);
 
 	return (
@@ -22,6 +22,7 @@ function CommentPage() {
 				{tokenActive ? (
 					<div>
 						<h1 className="text-4xl text-[#1e81b0] font-bold mb-4">Manage Comments</h1>
+						{!user.admin_access && <p className="w-full bg-[#db117d] px-2 py-2 text-white mb-4 rounded">ONLY verified user can manage this page.</p>}
 						{allComments.length > 0 ? (
 							allComments.map((comment) => (
 								<div key={comment._id} className="w-full mb-4">

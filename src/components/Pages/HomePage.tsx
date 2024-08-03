@@ -16,7 +16,7 @@ import DeleteBtn from "../DeleteBtn";
 import EditBtn from "../EditBtn";
 
 function HomePage() {
-	const { tokenActive } = useContext(AuthContext); // we have a verified user (e.g. token is active), show mangement page instead of login/signup
+	const { tokenActive, user } = useContext(AuthContext); // we have a verified user (e.g. token is active), show mangement page instead of login/signup
 	const { blogs } = useContext(BlogContext);
 
 	return (
@@ -26,6 +26,7 @@ function HomePage() {
 				{tokenActive ? (
 					<div>
 						<h1 className="text-4xl text-[#1e81b0] font-bold">Manage Blogs</h1>
+            {!user.admin_access && <p className="w-full bg-[#db117d] px-2 py-2 text-white my-2 rounded">ONLY verified user can manage this page.</p>}
 						{blogs.length > 0 ? (
 							<div className="posts-cards-container">
 								{blogs.map((blog) => (

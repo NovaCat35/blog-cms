@@ -4,7 +4,7 @@ Life is a beautiful mix of ups and downs. For all its worth, I like to sort out 
 
 > This is the content management site for Wayfarer's Frontier. The site allows admin and verified users to make blog edits and delete/update database info. For more info about the project, please see the frontend client repository.
 
-Live link: https://wayfarers-frontier.pages.dev/ 🧳
+Live link: https://wayfarers-frontier-cms.pages.dev/ 🧳
 
 <img width="903" alt="Screenshot 2024-06-03 at 2 23 30 AM" src="https://github.com/NovaCat35/blog-client/assets/54908064/e27498aa-c8f7-46fe-b1d8-128499e28c6d">
 
@@ -18,7 +18,8 @@ Live link: https://wayfarers-frontier.pages.dev/ 🧳
 ## Features 🎯
 - Sign-up/Login authentication
 - Admin detail page (blogs, users, comments) 
-- Editor
+- Blog Editor
+- Delete Mgmt
 - Session continuity and authorization with JWT
 
 ## Hosting Platforms 🌐
