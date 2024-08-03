@@ -24,6 +24,8 @@ function SubmitBlog() {
 				throw new Error("JWT token not found");
 			}
 
+			console.log(title, readTime, tags, file, imgSrcName, imgSrcLink, content)
+
 			// Convert HTML content to Markdown
 			const turndownService = new TurndownService();
 			const markdownContent = turndownService.turndown(content);
